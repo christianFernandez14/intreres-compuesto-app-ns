@@ -20,7 +20,13 @@ const MyInput = styled.input`
 `
 
 const ErrorMessage = styled.div`
-  color: #f00;
+  background-color: #ce3838;
+  padding: 6px 0;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
 `
 
 const Input = ({ label, ...props }) => {
