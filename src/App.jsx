@@ -1,25 +1,48 @@
-import styled from "@emotion/styled"
+import { Formik, Form } from "formik";
 
-const Container = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+import Container from "./components/Container";
+import Section from "./components/Section";
+import Input from "./components/Input";
+import Button from "./components/Button";
 
-const Section = styled.section`
-  background-color: #eee;
-  border-top: 2px solid palevioletred;
-  padding: 20px 25px;
-  width: 500px;
-  box-shadow: 0 2px 3px rgb(0,0,0,.3);
-  border-radius: 5px;
-`
+const compoundInterest = (deposit, contribution, years, rate) => {
+  let total = deposit
 
+  for (let i = 0; i < years; i++) {
+    total = (deposit + contribution) * (rate + 1)
+  }
+
+  return Math.round(total)
+}
 const App = () => {
+
+  const handleSubmit = ({ deposit, contribution, years, rate }) => {
+    const val = compoundInterest(Number(deposit), Number(contribution), Number(years), Number(rate))
+    console.log(val)
+  }
+
   return (
     <Container>
-      <Section>Desde App</Section>
+      <Section>
+        <Formik
+          initialValues={{
+            deposit: '',
+            contribution: '',
+            years: '',
+            rate: ''
+          }}
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            <Input name='deposit' label='deposito inicial' />
+            <Input name='contribution' label='contribución anual' />
+            <Input name='years' label='años' />
+            <Input name='rate' label='interés estimado' />
+            <Button type="submit">calcular</Button>
+          </Form>
+
+        </Formik>
+      </Section>
     </Container>
   )
 }
